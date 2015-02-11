@@ -277,7 +277,7 @@ class GitPHP_FileHistory implements Iterator, GitPHP_Pagination_Interface
 		}
 
 		$args[] = '--';
-		$args[] = $this->path;
+		$args[] = "'{$this->path}'";  // enclose but do not escpapeshellarg becaus of 'äöü' etc
 		$args[] = '|';
 		$args[] = $this->exe->GetBinary();
 		$args[] = '--git-dir=' . escapeshellarg($this->project->GetPath());
@@ -285,7 +285,7 @@ class GitPHP_FileHistory implements Iterator, GitPHP_Pagination_Interface
 		$args[] = '-r';
 		$args[] = '--stdin';
 		$args[] = '--';
-		$args[] = $this->path;
+		$args[] = "'{$this->path}'";
 		
 		$historylines = explode("\n", $this->exe->Execute($this->project->GetPath(), GIT_REV_LIST, $args));
 
