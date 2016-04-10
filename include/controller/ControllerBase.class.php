@@ -543,8 +543,12 @@ abstract class GitPHP_ControllerBase
 		if ($this->config->GetValue('graphs'))
 			$this->tpl->assign('enablegraphs', true);
 
-		$this->tpl->assign('baseurl', GitPHP_Util::BaseUrl());
-
+                if ($this->config->GetValue('self')) {
+                        $this->tpl->assign('baseurl', $this->config->GetValue('self'));
+                } else {
+                        $this->tpl->assign('baseurl', GitPHP_Util::BaseUrl());
+                }
+                
 		$requesturl = $_SERVER['REQUEST_URI'];
 		$querypos = strpos($requesturl, '?');
 		if ($querypos !== false)
