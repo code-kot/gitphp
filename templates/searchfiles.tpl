@@ -53,16 +53,16 @@
       {assign var=resultobject value=$result->GetObject()}
       {if $resultobject instanceof GitPHP_Tree}
 	      <td>
-		  <a href="{geturl project=$project action=tree hash=$resultobject hashbase=$commit file=$result->GetPath()}" class="list"><strong>{$result->GetPath()|highlight:$search}</strong></a>
+		  <a href="{geturl project=$project action=tree hash=$resultobject hashbase=$commit file=$result->GetPath()}" class="list"><strong>{$result->GetPath()|escape|highlight:$search}</strong></a>
 	      </td>
 	      <td class="link">
 		  <a href="{geturl project=$project action=tree hash=$resultobject hashbase=$commit file=$result->GetPath()}">{t}tree{/t}</a>
 	      </td>
       {else}
 	      <td>
-		  <a href="{geturl project=$project action=blob hash=$resultobject hashbase=$commit file=$result->GetPath()}" class="list"><strong>{$result->GetPath()|highlight:$search}</strong></a>
+		  <a href="{geturl project=$project action=blob hash=$resultobject hashbase=$commit file=$result->GetPath()}" class="list"><strong>{$result->GetPath()|escape|highlight:$search}</strong></a>
 		  {foreach from=$result->GetMatchingLines() item=line name=match key=lineno}
-		    {if $smarty.foreach.match.first}<br />{/if}<span class="matchline">{$lineno}. {$line|highlight:$search:50:true}</span><br />
+		    {if $smarty.foreach.match.first}<br />{/if}<span class="matchline">{$lineno}. {$line|escape|highlight:$search:50:true}</span><br />
 		  {/foreach}
 	      </td>
 	      <td class="link">

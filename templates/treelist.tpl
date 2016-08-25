@@ -11,12 +11,12 @@
 
 {foreach from=$tree->GetContents() item=treeitem}
   <tr class="{cycle values="light,dark"}">
-    <td class="monospace perms">{$treeitem->GetModeString()}</td>
+    <td class="monospace perms">{$treeitem->GetModeString()|escape}</td>
     {if $treeitem instanceof GitPHP_Blob}
-      <td class="filesize">{$treeitem->GetSize()}</td>
+      <td class="filesize">{$treeitem->GetSize()|escape}</td>
       <td></td>
       <td class="list fileName">
-        <a href="{geturl project=$project action=blob hash=$treeitem hashbase=$commit file=$treeitem->GetPath()}" class="list">{$treeitem->GetName()}</a>
+        <a href="{geturl project=$project action=blob hash=$treeitem hashbase=$commit file=$treeitem->GetPath()}" class="list">{$treeitem->GetName()|escape}</a>
       </td>
       <td class="link">
         <a href="{geturl project=$project action=blob hash=$treeitem hashbase=$commit file=$treeitem->GetPath()}">{t}blob{/t}</a>
@@ -29,7 +29,7 @@
       <td class="filesize"></td>
       <td class="expander"></td>
       <td class="list fileName">
-        <a href="{geturl project=$project action=tree hash=$treeitem hashbase=$commit file=$treeitem->GetPath()}" class="treeLink">{$treeitem->GetName()}</a>
+        <a href="{geturl project=$project action=tree hash=$treeitem hashbase=$commit file=$treeitem->GetPath()}" class="treeLink">{$treeitem->GetName()|escape}</a>
       </td>
       <td class="link">
         <a href="{geturl project=$project action=tree hash=$treeitem hashbase=$commit file=$treeitem->GetPath()}">{t}tree{/t}</a>

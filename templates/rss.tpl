@@ -8,7 +8,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>{$project->GetProject()}</title>
+    <title>{$project->GetProject()|escape}</title>
     <link>{geturl fullurl=true project=$project}</link>
     <atom:link rel="self" href="{geturl fullurl=true project=$project action=rss}" type="application/rss+xml" />
     <description>{$project->GetProject()} log</description>
@@ -25,10 +25,10 @@
         <content:encoded>
           <![CDATA[
           {foreach from=$logitem->GetComment() item=line}
-            {$line}<br />
+            {$line|escape}<br />
           {/foreach}
           {foreach from=$logitem->DiffToParent($gitexe) item=diffline}
-            {$diffline->GetToFile()}<br />
+            {$diffline->GetToFile()|escape}<br />
           {/foreach}
           ]]>
         </content:encoded>

@@ -11,7 +11,7 @@
 {extends file='main.tpl'}
 
 {block name=title}
-{$pagetitle} :: {$project->GetProject()}{if $actionlocal}/{$actionlocal}{/if}
+{$pagetitle|escape} :: {$project->GetProject()|escape}{if $actionlocal}/{$actionlocal|escape}{/if}
 {/block}
 
 {block name=feeds}
@@ -21,13 +21,13 @@
 
 {block name=links}
   {if $project->GetCloneUrl()}
-  <link rel="vcs-git" href="{$project->GetCloneUrl()}" title="{$project->GetDescription()|escape}" />
+  <link rel="vcs-git" href="{$project->GetCloneUrl()|escape}" title="{$project->GetDescription()|escape}" />
   {/if}
 {/block}
 
 {block name=header}
-  <a href="{geturl}">{if $homelink}{$homelink}{else}{t}projects{/t}{/if}</a> / 
-  <a href="{geturl project=$project}">{$project->GetProject()}</a>
+  <a href="{geturl}">{if $homelink}{$homelink|escape}{else}{t}projects{/t}{/if}</a> /
+  <a href="{geturl project=$project}">{$project->GetProject()|escape}</a>
   {if $actionlocal}
      / {$actionlocal}
   {/if}
@@ -35,9 +35,9 @@
     <form method="get" action="{geturl project=$project action=search hash=$commit}" enctype="application/x-www-form-urlencoded">
       <div class="search">
         {if !$router->GetCleanUrl()}
-	<input type="hidden" name="p" value="{$project->GetProject()}" />
+	<input type="hidden" name="p" value="{$project->GetProject()|escape}" />
         <input type="hidden" name="a" value="search" />
-        <input type ="hidden" name="h" value="{if $commit}{$commit->GetHash()}{else}HEAD{/if}" />
+        <input type ="hidden" name="h" value="{if $commit}{$commit->GetHash()|escape}{else}HEAD{/if}" />
 	{/if}
         <select name="st">
           <option {if $searchtype == 'commit'}selected="selected"{/if} value="commit">{t}commit{/t}</option>
@@ -46,7 +46,7 @@
           {if $filesearch}
             <option {if $searchtype == 'file'}selected="selected"{/if} value="file">{t}file{/t}</option>
           {/if}
-        </select> {t}search{/t}: <input type="search" name="s" {if $search}value="{$search}"{/if} />
+        </select> {t}search{/t}: <input type="search" name="s" {if $search}value="{$search|escape}"{/if} />
       </div>
     </form>
   {/if}
@@ -55,7 +55,7 @@
 {block name=footer}
   <div class="page_footer_text">
   {if $project->GetWebsite()}
-  <a href="{$project->GetWebsite()}">{$project->GetDescription()|escape}</a>
+  <a href="{$project->GetWebsite()|escape}">{$project->GetDescription()|escape}</a>
   {else}
   {$project->GetDescription()|escape}
   {/if}
