@@ -19,9 +19,9 @@
  {assign var=objtype value=$tag->GetType()}
  <div class="title">
    {if $objtype == 'blob'}
-   <a href="{geturl project=$project action=blob hash=$object}" class="title">{$tag->GetName()}</a>
+   <a href="{geturl project=$project action=blob hash=$object}" class="title">{$tag->GetName()|escape}</a>
    {else}
-   <a href="{geturl project=$project action=commit hash=$object}" class="title">{$tag->GetName()}</a>
+   <a href="{geturl project=$project action=commit hash=$object}" class="title">{$tag->GetName()|escape}</a>
    {/if}
  </div>
  <div class="title_text">
@@ -29,29 +29,29 @@
      <tr>
        <td>{t}object{/t}</td>
        {if $objtype == 'commit'}
-         <td class="monospace"><a href="{geturl project=$project action=commit hash=$object}" class="list">{$object->GetHash()}</a></td>
+         <td class="monospace"><a href="{geturl project=$project action=commit hash=$object}" class="list">{$object->GetHash()|escape}</a></td>
          <td class="link"><a href="{geturl project=$project action=commit hash=$object}">{t}commit{/t}</a></td>
        {elseif $objtype == 'tag'}
-         <td class="monospace"><a href="{geturl project=$project action=tag tag=$object}" class="list">{$object->GetHash()}</a></td>
+         <td class="monospace"><a href="{geturl project=$project action=tag tag=$object}" class="list">{$object->GetHash()|escape}</a></td>
          <td class="link"><a href="{geturl project=$project action=tag tag=$object}">{t}tag{/t}</a></td>
        {elseif $objtype == 'blob'}
-         <td class="monospace"><a href="{geturl project=$project action=blob hash=$object}" class="list">{$object->GetHash()}</a></td>
+         <td class="monospace"><a href="{geturl project=$project action=blob hash=$object}" class="list">{$object->GetHash()|escape}</a></td>
          <td class="link"><a href="{geturl project=$project action=blob hash=$object}">{t}blob{/t}</a></td>
        {/if}
      </tr>
      {if $tag->GetTagger()}
        <tr>
          <td>{t}author{/t}</td>
-	 <td>{$tag->GetTagger()}</td>
+	 <td>{$tag->GetTagger()|escape}</td>
        </tr>
        <tr>
          <td></td>
 	 <td> <time datetime="{$tag->GetTaggerEpoch()|date_format:"%Y-%m-%dT%H:%M:%S+00:00"}">{$tag->GetTaggerEpoch()|date_format:"%a, %d %b %Y %H:%M:%S %z"}</time>
 	 {assign var=hourlocal value=$tag->GetTaggerLocalEpoch()|date_format:"%H"}
 	 {if $hourlocal < 6}
-	 (<time datetime="{$tag->GetTaggerLocalEpoch()|date_format:"%Y-%m-%dT%H:%M:%S"}{$tag->GetTaggerTimezone(true)}"><span class="latenight">{$tag->GetTaggerLocalEpoch()|date_format:"%R"}</span> {$tag->GetTaggerTimezone()}</time>)
+	 (<time datetime="{$tag->GetTaggerLocalEpoch()|date_format:"%Y-%m-%dT%H:%M:%S"}{$tag->GetTaggerTimezone(true)|escape}"><span class="latenight">{$tag->GetTaggerLocalEpoch()|date_format:"%R"}</span> {$tag->GetTaggerTimezone()|escape}</time>)
 	 {else}
-	 (<time datetime="{$tag->GetTaggerLocalEpoch()|date_format:"%Y-%m-%dT%H:%M:%S"}{$tag->GetTaggerTimezone(true)}">{$tag->GetTaggerLocalEpoch()|date_format:"%R"} {$tag->GetTaggerTimezone()}</time>)
+	 (<time datetime="{$tag->GetTaggerLocalEpoch()|date_format:"%Y-%m-%dT%H:%M:%S"}{$tag->GetTaggerTimezone(true)|escape}">{$tag->GetTaggerLocalEpoch()|date_format:"%R"} {$tag->GetTaggerTimezone()|escape}</time>)
 	 {/if}
          </td>
        </tr>

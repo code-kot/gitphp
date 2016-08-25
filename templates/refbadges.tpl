@@ -12,12 +12,12 @@
 <span class="refs">
 	{foreach from=$commit->GetHeads() item=commithead}
 		<span class="head">
-			<a href="{geturl project=$project action=shortlog hash=$commithead}">{$commithead->GetName()}</a>
+			<a href="{geturl project=$project action=shortlog hash=$commithead}">{$commithead->GetName()|escape}</a>
 		</span>
 	{/foreach}
 	{foreach from=$commit->GetTags() item=committag}
 		<span class="tag">
-			<a href="{geturl project=$project action=tag tag=$committag}" {if !$committag->LightTag()}class="tagTip"{/if}>{$committag->GetName()}</a>
+			<a href="{geturl project=$project action=tag tag=$committag}" {if !$committag->LightTag()}class="tagTip"{/if}>{$committag->GetName()|escape}</a>
 		</span>
 	{/foreach}
 </span>
