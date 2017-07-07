@@ -141,9 +141,9 @@ class GitPHP_FileBlame
 		$args = array();
 		$args[] = '-s';
 		$args[] = '-l';
-		$args[] = $this->commitHash;
+		$args[] = escapeshellarg($this->commitHash);
 		$args[] = '--';
-		$args[] = $this->path;
+		$args[] = escapeshellarg($this->path);
 
 		$blamelines = explode("\n", $this->exe->Execute($this->project->GetPath(), GIT_BLAME, $args));
 

@@ -42,7 +42,7 @@ abstract class GitPHP_BlobLoad_Base implements GitPHP_BlobLoadStrategy_Interface
 
 		$args = array();
 		$args[] = '-s';
-		$args[] = $blob->GetHash();
+		$args[] = escapeshellarg($blob->GetHash());
 
 		return $this->exe->Execute($blob->GetProject()->GetPath(), GIT_CAT_FILE, $args);
 	}

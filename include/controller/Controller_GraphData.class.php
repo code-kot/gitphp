@@ -76,7 +76,7 @@ class GitPHP_Controller_GraphData extends GitPHP_ControllerBase
 
 			$data = array();
 
-			$commits = explode("\n", $this->exe->Execute($this->GetProject()->GetPath(), 'rev-list', array('--format=format:"%H %ct"', $head->GetHash())));
+			$commits = explode("\n", $this->exe->Execute($this->GetProject()->GetPath(), 'rev-list', array('--format=format:"%H %ct"', escapeshellarg($head->GetHash()))));
 			foreach ($commits as $commit) {
 				if (preg_match('/^([0-9a-fA-F]{40}) ([0-9]+)$/', $commit, $regs)) {
 					$data[] = array('CommitEpoch' => (int)$regs[2]);
@@ -90,7 +90,7 @@ class GitPHP_Controller_GraphData extends GitPHP_ControllerBase
 			include_once(GITPHP_GESHIDIR . "geshi.php");
 			$geshi = new GeSHi("",'php');
 
-			$files = explode("\n", $this->exe->Execute($this->GetProject()->GetPath(), 'ls-tree', array('-r', '--name-only', $head->GetTree()->GetHash())));
+			$files = explode("\n", $this->exe->Execute($this->GetProject()->GetPath(), 'ls-tree', array('-r', '--name-only', escapeshellarg($head->GetTree()->GetHash()))));
 			foreach ($files as $file) {
 				$filename = GitPHP_Util::BaseName($file);
 				$lang = GitPHP_Util::GeshiFilenameToLanguage($filename);

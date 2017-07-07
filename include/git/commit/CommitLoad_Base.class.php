@@ -42,7 +42,7 @@ abstract class GitPHP_CommitLoad_Base implements GitPHP_CommitLoadStrategy_Inter
 
 		$args = array();
 		$args[] = '--tags';
-		$args[] = $commit->GetHash();
+		$args[] = escapeshellarg($commit->GetHash());
 		$revs = explode("\n", $this->exe->Execute($commit->GetProject()->GetPath(), GIT_NAME_REV, $args));
 
 		foreach ($revs as $revline) {

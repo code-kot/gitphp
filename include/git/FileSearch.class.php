@@ -382,8 +382,8 @@ class GitPHP_FileSearch implements Iterator, GitPHP_Pagination_Interface
 		$args[] = '--ignore-case';
 		$args[] = '-n';
 		$args[] = '-e';
-		$args[] = '"' . addslashes($this->search) . '"';
-		$args[] = $this->treeHash;
+		$args[] = escapeshellarg($this->search);
+		$args[] = escapeshellarg($this->treeHash);
 
 		$lines = explode("\n", $this->exe->Execute($this->project->GetPath(), GIT_GREP, $args));
 

@@ -47,7 +47,7 @@ abstract class GitPHP_TreeLoad_Base implements GitPHP_TreeLoadStrategy_Interface
 		$args[] = '--full-name';
 		$args[] = '-r';
 		$args[] = '-t';
-		$args[] = $tree->GetHash();
+		$args[] = escapeshellarg($tree->GetHash());
 
 		$lines = explode("\n", $this->exe->Execute($tree->GetProject()->GetPath(), GIT_LS_TREE, $args));
 

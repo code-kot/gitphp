@@ -89,7 +89,7 @@ class GitPHP_ProjectLoad_Git implements GitPHP_ProjectLoadStrategy_Interface
 		$args = array();
 		$args[] = '-1';
 		$args[] = '--format=format:%H';
-		$args[] = $abbrevHash;
+		$args[] = escapeshellarg($abbrevHash);
 
 		$fullData = explode("\n", $this->exe->Execute($project->GetPath(), GIT_REV_LIST, $args));
 		if (empty($fullData[0])) {
@@ -125,7 +125,7 @@ class GitPHP_ProjectLoad_Git implements GitPHP_ProjectLoadStrategy_Interface
 		$args = array();
 		$args[] = '-1';
 		$args[] = '--format=format:%h';
-		$args[] = $hash;
+		$args[] = escapeshellarg($hash);
 
 		$abbrevData = explode("\n", $this->exe->Execute($project->GetPath(), GIT_REV_LIST, $args));
 		if (empty($abbrevData[0])) {

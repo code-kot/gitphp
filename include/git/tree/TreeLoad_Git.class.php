@@ -29,7 +29,7 @@ class GitPHP_TreeLoad_Git extends GitPHP_TreeLoad_Base
 		if ($this->exe->CanShowSizeInTree())
 			$args[] = '-l';
 		$args[] = '-t';
-		$args[] = $tree->GetHash();
+		$args[] = escapeshellarg($tree->GetHash());
 		
 		$lines = explode("\n", $this->exe->Execute($tree->GetProject()->GetPath(), GIT_LS_TREE, $args));
 
