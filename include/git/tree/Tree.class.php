@@ -226,6 +226,43 @@ class GitPHP_Tree extends GitPHP_FilesystemObject implements GitPHP_Observable_I
 			return $this->treePaths[$path];
 		}
 
+		// Second try with unslashed names
+		// This is a real ugly hack, but it works for me.
+		// Git adds c style slashes to paths with special characters
+		// and also adds leading and trailing double quotes to the path name
+		// to identify such c style encoded paths.
+		// So the reported path from git does not match the path from gitphp.
+		// Alternatives would be:
+		// 1) git -z
+		//    but I do not know how to add this parameter only here
+		//    and I do not know how to handle the response properly.
+		// 2) use php addcslashes ?
+		//    but I do not know which characters to escape to
+		//    be in sync with git. It is easier to remove c slashes and
+		//    work the reverse route.
+
+		foreach ($this->blobPaths as $key => $hash) {
+
+			if (substr($key, 0, 1) == '"' && substr($key, -1) == '"') {
+				$key = substr($key, 1, -1);
+			}
+			$key = stripcslashes($key);
+			if ($key == $path) {
+				return $hash;
+			}
+		}  // eo blob paths
+
+		foreach ($this->treePaths as $key => $hash) {
+
+			if (substr($key, 0, 1) == '"' && substr($key, -1) == '"') {
+				$key = substr($key, 1, -1);
+			}
+			$key = stripcslashes($key);
+			if ($key == $path) {
+				return $hash;
+			}
+		}  // eo tree paths
+
 		return '';
 	}
 
