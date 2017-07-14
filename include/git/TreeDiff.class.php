@@ -121,9 +121,9 @@ class GitPHP_TreeDiff implements Iterator
 		if (empty($this->fromHash))
 			$args[] = '--root';
 		else
-			$args[] = $this->fromHash;
+			$args[] = escapeshellarg($this->fromHash);
 
-		$args[] = $this->toHash;
+		$args[] = escapeshellarg($this->toHash);
 
 		$diffTreeLines = explode("\n", $this->exe->Execute($this->GetProject()->GetPath(), GIT_DIFF_TREE, $args));
 		foreach ($diffTreeLines as $line) {

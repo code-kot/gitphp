@@ -52,14 +52,14 @@ class GitPHP_RevList_Git
 
 		if ($canSkip) {
 			if ($count > 0) {
-				$extraargs[] = '--max-count=' . $count;
+				$extraargs[] = '--max-count=' . escapeshellarg($count);
 			}
 			if ($skip > 0) {
-				$extraargs[] = '--skip=' . $skip;
+				$extraargs[] = '--skip=' . escapeshellarg($skip);
 			}
 		} else {
 			if ($count > 0) {
-				$extraargs[] = '--max-count=' . ($count + $skip);
+				$extraargs[] = '--max-count=' . escapeshellarg($count + $skip);
 			}
 		}
 

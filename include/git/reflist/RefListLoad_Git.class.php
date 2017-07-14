@@ -45,7 +45,7 @@ abstract class GitPHP_RefListLoad_Git
 			return;
 
 		$args = array();
-		$args[] = '--' . $type;
+		$args[] = '--' . escapeshellarg($type);
 		$args[] = '--dereference';
 		$ret = $this->exe->Execute($refList->GetProject()->GetPath(), GIT_SHOW_REF, $args);
 
@@ -86,17 +86,17 @@ abstract class GitPHP_RefListLoad_Git
 			return null;
 
 		$args = array();
-		$args[] = '--sort=' . $order;
+		$args[] = '--sort=' . escapeshellarg($order);
 		$args[] = '--format="%(refname)"';
 		if ($count > 0) {
 			if ($skip > 0) {
-				$args[] = '--count=' . ($count + $skip);
+				$args[] = '--count=' . escapeshellarg($count + $skip);
 			} else {
-				$args[] = '--count=' . $count;
+				$args[] = '--count=' . escapeshellarg($count);
 			}
 		}
 		$args[] = '--';
-		$args[] = 'refs/' . $type;
+		$args[] = escapeshellarg('refs/' . $type);
 		$ret = $this->exe->Execute($refList->GetProject()->GetPath(), GIT_FOR_EACH_REF, $args);
 
 		$lines = explode("\n", $ret);

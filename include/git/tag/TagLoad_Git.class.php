@@ -112,7 +112,7 @@ class GitPHP_TagLoad_Git implements GitPHP_TagLoadStrategy_Interface
 			case 'tag':
 				$args = array();
 				$args[] = 'tag';
-				$args[] = $objectHash;
+				$args[] = escapeshellarg($objectHash);
 				$ret = $this->exe->Execute($tag->GetProject()->GetPath(), GIT_CAT_FILE, $args);
 				$lines = explode("\n", $ret);
 				foreach ($lines as $i => $line) {
