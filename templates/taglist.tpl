@@ -15,20 +15,20 @@
 	   {assign var=object value=$tag->GetObject()}
 	   {assign var=tagcommit value=$tag->GetCommit()}
 	   {assign var=objtype value=$tag->GetType()}
-           <td><em>{if $tagcommit}<time datetime="{$tagcommit->GetCommitterEpoch()|date_format:"%Y-%m-%dT%H:%M:%S+00:00"}">{agestring age=$tagcommit->GetAge()}</time>{else}<time datetime="{$tag->GetTaggerEpoch()|date_format:"%Y-%m-%dT%H:%M:%S+00:00"}">{agestring age=$tag->GetAge()}</time>{/if}</em></td>
+           <td><em>{if $tagcommit}<time datetime="{$tagcommit->GetCommitterEpoch()|date_format:"%Y-%m-%dT%H:%M:%S+00:00"}">{agestring age=$tagcommit->GetAge()|escape}</time>{else}<time datetime="{$tag->GetTaggerEpoch()|date_format:"%Y-%m-%dT%H:%M:%S+00:00"}">{agestring age=$tag->GetAge()|escape}</time>{/if}</em></td>
            <td>
 	   {if $objtype == 'commit'}
-		   <a href="{geturl project=$project action=commit hash=$object}" class="list"><strong>{$tag->GetName()}</strong></a>
+		   <a href="{geturl project=$project action=commit hash=$object}" class="list"><strong>{$tag->GetName()|escape}</strong></a>
 	   {elseif $objtype == 'tag'}
-		   <a href="{geturl project=$project action=tag tag=$tag}" class="list"><strong>{$tag->GetName()}</strong></a>
+		   <a href="{geturl project=$project action=tag tag=$tag}" class="list"><strong>{$tag->GetName()|escape}</strong></a>
 	   {elseif $objtype == 'blob'}
-		   <a href="{geturl project=$project action=blob hash=$object}" class="list"><strong>{$tag->GetName()}</strong></a>
+		   <a href="{geturl project=$project action=blob hash=$object}" class="list"><strong>{$tag->GetName()|escape}</strong></a>
 	   {/if}
 	   </td>
            <td>
 	     {assign var=comment value=$tag->GetComment()}
              {if count($comment) > 0}
-               <a class="list {if !$tag->LightTag()}tagTip{/if}" href="{geturl project=$project action=tag tag=$tag}">{$comment[0]}</a>
+               <a class="list {if !$tag->LightTag()}tagTip{/if}" href="{geturl project=$project action=tag tag=$tag}">{$comment[0]|escape}</a>
              {/if}
            </td>
            <td class="link">

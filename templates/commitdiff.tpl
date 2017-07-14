@@ -55,11 +55,11 @@ require.paths.commitdiff = "commitdiff.min";
        {t count=$treediff->Count() 1=$treediff->Count() plural="%1 files changed:"}%1 file changed:{/t} <a href="#" class="showAll">{t}(show all){/t}</a></li>
        {foreach from=$treediff item=filediff}
        <li>
-       <a href="#{$filediff->GetFromHash()}_{$filediff->GetToHash()}" class="SBSTOCItem">
+       <a href="#{$filediff->GetFromHash()|escape}_{$filediff->GetToHash()|escape}" class="SBSTOCItem">
        {if $filediff->GetStatus() == 'A'}
-         {if $filediff->GetToFile()}{$filediff->GetToFile()}{else}{$filediff->GetToHash()}{/if} {t}(new){/t}
+         {if $filediff->GetToFile()}{$filediff->GetToFile()|escape}{else}{$filediff->GetToHash()|escape}{/if} {t}(new){/t}
        {elseif $filediff->GetStatus() == 'D'}
-         {if $filediff->GetFromFile()}{$filediff->GetFromFile()}{else}{$filediff->GetToFile()}{/if} {t}(deleted){/t}
+         {if $filediff->GetFromFile()}{$filediff->GetFromFile()|escape}{else}{$filediff->GetToFile()|escape}{/if} {t}(deleted){/t}
        {elseif $filediff->GetStatus() == 'M'}
          {if $filediff->GetFromFile()}
 	   {assign var=fromfilename value=$filediff->GetFromFile()}
@@ -71,7 +71,7 @@ require.paths.commitdiff = "commitdiff.min";
 	 {else}
 	   {assign var=tofilename value=$filediff->GetToHash()}
 	 {/if}
-	 {$fromfilename}{if $fromfilename != $tofilename} -&gt; {$tofilename}{/if}
+	 {$fromfilename|escape}{if $fromfilename != $tofilename} -&gt; {$tofilename|escape}{/if}
        {/if}
        </a>
        </li>
@@ -84,10 +84,10 @@ require.paths.commitdiff = "commitdiff.min";
 
    {* Diff each file changed *}
    {foreach from=$treediff item=filediff}
-     <div class="diffBlob" id="{$filediff->GetFromHash()}_{$filediff->GetToHash()}">
+     <div class="diffBlob" id="{$filediff->GetFromHash()|escape}_{$filediff->GetToHash()|escape}">
      <div class="diff_info">
      {if ($filediff->GetStatus() == 'D') || ($filediff->GetStatus() == 'M')}
-       {localfiletype type=$filediff->GetFromFileType()}:<a href="{geturl project=$project action=blob hash=$filediff->GetFromBlob() hashbase=$commit file=$filediff->GetFromFile()}">{if $filediff->GetFromFile()}a/{$filediff->GetFromFile()}{else}{$filediff->GetFromHash()}{/if}</a>
+       {localfiletype type=$filediff->GetFromFileType()}:<a href="{geturl project=$project action=blob hash=$filediff->GetFromBlob() hashbase=$commit file=$filediff->GetFromFile()}">{if $filediff->GetFromFile()}a/{$filediff->GetFromFile()|escape}{else}{$filediff->GetFromHash()|escape}{/if}</a>
        {if $filediff->GetStatus() == 'D'}
          {t}(deleted){/t}
        {/if}

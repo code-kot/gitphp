@@ -25,7 +25,7 @@
    <table>
      <tr>
        <td>{t}author{/t}</td>
-       <td>{$commit->GetAuthorName()}</td>
+       <td>{$commit->GetAuthorName()|escape}</td>
        <td></td>
      </tr>
      <tr>
@@ -34,31 +34,31 @@
        <time datetime="{$commit->GetAuthorEpoch()|date_format:"%Y-%m-%dT%H:%M:%S+00:00"}">{$commit->GetAuthorEpoch()|date_format:"%a, %d %b %Y %H:%M:%S %z"}</time>
        {assign var=hourlocal value=$commit->GetAuthorLocalEpoch()|date_format:"%H"}
        {if $hourlocal < 6}
-       (<time datetime="{$commit->GetAuthorLocalEpoch()|date_format:"%Y-%m-%dT%H:%M:%S"}{$commit->GetAuthorTimezone(true)}"><span class="latenight">{$commit->GetAuthorLocalEpoch()|date_format:"%R"}</span> {$commit->GetAuthorTimezone()}</time>)
+       (<time datetime="{$commit->GetAuthorLocalEpoch()|date_format:"%Y-%m-%dT%H:%M:%S"}{$commit->GetAuthorTimezone(true)}"><span class="latenight">{$commit->GetAuthorLocalEpoch()|date_format:"%R"}</span> {$commit->GetAuthorTimezone()|escape}</time>)
        {else}
-       (<time datetime="{$commit->GetAuthorLocalEpoch()|date_format:"%Y-%m-%dT%H:%M:%S"}{$commit->GetAuthorTimezone(true)}">{$commit->GetAuthorLocalEpoch()|date_format:"%R"} {$commit->GetAuthorTimezone()}</time>)
+       (<time datetime="{$commit->GetAuthorLocalEpoch()|date_format:"%Y-%m-%dT%H:%M:%S"}{$commit->GetAuthorTimezone(true)}">{$commit->GetAuthorLocalEpoch()|date_format:"%R"} {$commit->GetAuthorTimezone()|escape}</time>)
        {/if}
        </td>
        <td></td>
      </tr>
      <tr>
        <td>{t}committer{/t}</td>
-       <td>{$commit->GetCommitterName()}</td>
+       <td>{$commit->GetCommitterName()|escape}</td>
        <td></td>
      </tr>
      <tr>
        <td></td>
-       <td> <time datetime="{$commit->GetCommitterEpoch()|date_format:"%Y-%m-%dT%H:%M:%S+00:00"}">{$commit->GetCommitterEpoch()|date_format:"%a, %d %b %Y %H:%M:%S %z"}</time> (<time datetime="{$commit->GetCommitterLocalEpoch()|date_format:"%Y-%m-%dT%H:%M:%S"}{$commit->GetCommitterTimezone(true)}">{$commit->GetCommitterLocalEpoch()|date_format:"%R"} {$commit->GetCommitterTimezone()}</time>)</td>
+       <td> <time datetime="{$commit->GetCommitterEpoch()|date_format:"%Y-%m-%dT%H:%M:%S+00:00"}">{$commit->GetCommitterEpoch()|date_format:"%a, %d %b %Y %H:%M:%S %z"}</time> (<time datetime="{$commit->GetCommitterLocalEpoch()|date_format:"%Y-%m-%dT%H:%M:%S"}{$commit->GetCommitterTimezone(true)|escape}">{$commit->GetCommitterLocalEpoch()|date_format:"%R"} {$commit->GetCommitterTimezone()|escape}</time>)</td>
        <td></td>
      </tr>
      <tr>
        <td>{t}commit{/t}</td>
-       <td class="monospace">{$commit->GetHash()}</td>
+       <td class="monospace">{$commit->GetHash()|escape}</td>
        <td></td>
      </tr>
      <tr>
        <td>{t}tree{/t}</td>
-       <td class="monospace"><a href="{geturl project=$project action=tree hash=$tree hashbase=$commit}" class="list">{$tree->GetHash()}</a></td>
+       <td class="monospace"><a href="{geturl project=$project action=tree hash=$tree hashbase=$commit}" class="list">{$tree->GetHash()|escape}</a></td>
        <td class="link"><a href="{geturl project=$project action=tree hash=$tree hashbase=$commit}">{t}tree{/t}</a> | <a href="{geturl project=$project action=snapshot hash=$commit}" class="snapshotTip">{t}snapshot{/t}</a></td>
      </tr>
      {foreach from=$commit->GetParents() item=par}
@@ -95,7 +95,7 @@
        {if $diffline->GetStatus() == "A"}
          <td>
 	   <a href="{geturl project=$project action=blob hash=$diffline->GetToBlob() hashbase=$commit file=$diffline->GetFromFile()}" class="list">
-	     {$diffline->GetFromFile()}
+	     {$diffline->GetFromFile()|escape}
 	   </a>
 	 </td>
          <td>
@@ -120,7 +120,7 @@
          {assign var=parent value=$commit->GetParent()}
          <td>
 	   <a href="{geturl project=$project action=blob hash=$diffline->GetFromBlob() hashbase=$commit file=$diffline->GetFromFile()}" class="list">
-	     {$diffline->GetFromFile()}
+	     {$diffline->GetFromFile()|escape}
 	   </a>
 	 </td>
          <td>
@@ -140,11 +140,11 @@
          <td>
            {if $diffline->GetToHash() != $diffline->GetFromHash()}
              <a href="{geturl project=$project action=blobdiff hash=$diffline->GetToBlob() hashparent=$diffline->GetFromBlob() hashbase=$commit file=$diffline->GetToFile()}" class="list">
-	       {$diffline->GetToFile()}
+	       {$diffline->GetToFile()|escape}
 	     </a>
            {else}
              <a href="{geturl project=$project action=blob hash=$diffline->GetToBlob() hashbase=$commit file=$diffline->GetToFile()}" class="list">
-	       {$diffline->GetToFile()}
+	       {$diffline->GetToFile()|escape}
 	     </a>
            {/if}
          </td>
@@ -153,8 +153,8 @@
 	     <span class="changedfile">
 	       [
 	       {if $diffline->FileTypeChanged()}
-	         {localfiletype type=$diffline->GetFromFileType() assign=localfromtype}
-	         {localfiletype type=$diffline->GetToFileType() assign=localtotype}
+	         {localfiletype type=$diffline->GetFromFileType() assign=localfromtype|escape}
+	         {localfiletype type=$diffline->GetToFileType() assign=localtotype|escape}
 	         {if $diffline->FileModeChanged()}
 		   {if $diffline->FromFileIsRegular() && $diffline->ToFileIsRegular()}
 		     {assign var=frommode value=$diffline->GetFromModeShort()}
@@ -200,7 +200,7 @@
        {elseif $diffline->GetStatus() == "R"}
          <td>
 	   <a href="{geturl project=$project action=blob hash=$diffline->GetToBlob() hashbase=$commit file=$diffline->GetToFile()}" class="list">
-	     {$diffline->GetToFile()}</a>
+	     {$diffline->GetToFile()|escape}</a>
 	 </td>
          <td>
 	   <span class="movedfile">

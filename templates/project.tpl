@@ -24,13 +24,13 @@
    <tr><td>{t}last change{/t}</td><td><time datetime="{$head->GetCommitterEpoch()|date_format:"%Y-%m-%dT%H:%M:%S+00:00"}">{$head->GetCommitterEpoch()|date_format:"%a, %d %b %Y %H:%M:%S %z"}</time></td></tr>
    {/if}
    {if $project->GetCloneUrl()}
-     <tr><td>{t}clone url{/t}</td><td><a href="{$project->GetCloneUrl()}" rel="nofollow">{$project->GetCloneUrl()}</a></td></tr>
+     <tr><td>{t}clone url{/t}</td><td><a href="{$project->GetCloneUrl()|escape}" rel="nofollow">{$project->GetCloneUrl()|escape}</a></td></tr>
    {/if}
    {if $project->GetPushUrl()}
-     <tr><td>{t}push url{/t}</td><td><a href="{$project->GetPushUrl()}" rel="nofollow">{$project->GetPushUrl()}</a></td></tr>
+     <tr><td>{t}push url{/t}</td><td><a href="{$project->GetPushUrl()|escape}" rel="nofollow">{$project->GetPushUrl()|escape}</a></td></tr>
    {/if}
    {if $project->GetWebsite()}
-     <tr><td>{t}website{/t}</td><td><a href="{$project->GetWebsite()}" rel="nofollow">{$project->GetWebsite()}</a></td></tr>
+     <tr><td>{t}website{/t}</td><td><a href="{$project->GetWebsite()|escape}" rel="nofollow">{$project->GetWebsite()|escape}</a></td></tr>
    {/if}
  </table>
 

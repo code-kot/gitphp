@@ -29,7 +29,7 @@ git source code archive
 
 <div class="projectSearch">
 <form method="get" action="{geturl}" id="projectSearchForm" enctype="application/x-www-form-urlencoded">
-{t}Search projects{/t}: <input type="search" name="s" class="projectSearchBox" {if $search}value="{$search}"{/if} /> <a href="{geturl}" class="clearSearch" {if !$search}style="display: none;"{/if}>X</a> {if $javascript}<img src="images/search-loader.gif" class="searchSpinner" style="display: none;" alt="{t}Loading…{/t}" />{/if}
+{t}Search projects{/t}: <input type="search" name="s" class="projectSearchBox" {if $search}value="{$search|escape}"{/if} /> <a href="{geturl}" class="clearSearch" {if !$search}style="display: none;"{/if}>X</a> {if $javascript}<img src="images/search-loader.gif" class="searchSpinner" style="display: none;" alt="{t}Loading…{/t}" />{/if}
 </form>
 </div>
 
@@ -66,7 +66,7 @@ git source code archive
       {assign var=currentcategory value=$proj->GetCategory()}
       {if $currentcategory != ''}
         <tr class="light categoryRow">
-          <th class="categoryName">{$currentcategory}</th>
+          <th class="categoryName">{$currentcategory|escape}</th>
           <th></th>
           <th></th>
           <th></th>
@@ -78,9 +78,9 @@ git source code archive
     <tr class="{cycle values="light,dark"} projectRow {if $loginenabled && !$proj->UserCanAccess($loggedinuser)}disabled{/if}">
       <td class="projectName">
         {if !$loginenabled || $proj->UserCanAccess($loggedinuser)}
-        <a href="{geturl project=$proj}" class="list {if $currentcategory != ''}indent{/if}"><span>{$proj->GetProject()}</span></a>
+        <a href="{geturl project=$proj}" class="list {if $currentcategory != ''}indent{/if}"><span>{$proj->GetProject()|escape}</span></a>
         {else}
-        <span {if $currentcategory != ''}class="indent"{/if}>{$proj->GetProject()}</span>
+        <span {if $currentcategory != ''}class="indent"{/if}>{$proj->GetProject()|escape}</span>
         {/if}
       </td>
       <td class="projectDescription">
@@ -95,11 +95,11 @@ git source code archive
       <td class="projectAge">
         {if $projecthead}
           {if $proj->GetAge() < 7200}   {* 60*60*2, or 2 hours *}
-            <span class="agehighlight"><strong><em><time datetime="{$proj->GetEpoch()|date_format:"%Y-%m-%dT%H:%M:%S+00:00"}">{agestring age=$proj->GetAge()}</time></em></strong></span>
+            <span class="agehighlight"><strong><em><time datetime="{$proj->GetEpoch()|date_format:"%Y-%m-%dT%H:%M:%S+00:00"}">{agestring age=$proj->GetAge()|escape}</time></em></strong></span>
           {elseif $proj->GetAge() < 172800}   {* 60*60*24*2, or 2 days *}
-            <span class="agehighlight"><em><time datetime="{$proj->GetEpoch()|date_format:"%Y-%m-%dT%H:%M:%S+00:00"}">{agestring age=$proj->GetAge()}</time></em></span>
+            <span class="agehighlight"><em><time datetime="{$proj->GetEpoch()|date_format:"%Y-%m-%dT%H:%M:%S+00:00"}">{agestring age=$proj->GetAge()|escape}</time></em></span>
           {else}
-            <em><time datetime="{$proj->GetEpoch()|date_format:"%Y-%m-%dT%H:%M:%S+00:00"}">{agestring age=$proj->GetAge()}</time></em>
+            <em><time datetime="{$proj->GetEpoch()|date_format:"%Y-%m-%dT%H:%M:%S+00:00"}">{agestring age=$proj->GetAge()|escape}</time></em>
           {/if}
 	{else}
 	  <em class="empty">{t}No commits{/t}</em>

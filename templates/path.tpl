@@ -12,7 +12,7 @@
 	{if $pathobject}
 		{assign var=pathobjectcommit value=$pathobject->GetCommit()}
 		{assign var=pathobjecttree value=$pathobjectcommit->GetTree()}
-		<a href="{geturl project=$project action=tree hashbase=$pathobjectcommit hash=$pathobjecttree}"><strong>[{$project->GetProject()}]</strong></a> / 
+		<a href="{geturl project=$project action=tree hashbase=$pathobjectcommit hash=$pathobjecttree}"><strong>[{$project->GetProject()|escape}]</strong></a> /
 		{foreach from=$pathobject->GetPathTree() item=pathtreepiece}
 			<a href="{geturl project=$project action=tree hashbase=$pathobjectcommit hash=$pathtreepiece file=$pathtreepiece->GetPath()}"><strong>{$pathtreepiece->GetName()|escape}</strong></a> / 
 		{/foreach}
